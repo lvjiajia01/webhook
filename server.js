@@ -18,9 +18,7 @@ const server = http.createServer((req, res) => {
             let body = Buffer.concat(buffers)
             let event = req.header['x-github-event']        // push
             let signature = req.header['x-hub-signature']   // 签名
-            if(signature === sign(body)) {
-                
-            }else{
+            if(signature !== sign(body)) {
                 return res.end("Not Allowed!")   // 非法请求
             }
         })
