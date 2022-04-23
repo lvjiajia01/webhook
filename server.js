@@ -1,7 +1,30 @@
+const { sign } = require("crypto")
 const http = require("http")
+
+const SECRET = '123456';
+
+function sign(body) {
+    return `sha1=${ crypto.creteHmac('sha1', SECRET).update(body).digest('hex') }`
+}
+
 const server = http.createServer((req, res) => {
     console.log(req.method, req.url)
+    let buffers = []
     if(req.method === 'POST' && req.url === '/webhook') {
+        req.on('data', buffer => {
+            buffers.push(buffer)
+        })
+        req.on("end", buffer => {
+            let body = Buffer.concat(buffers)
+            let event = req.header['x-github-event']        // push
+            let signature = req.header['x-hub-signature']   // 签名
+            if(signature === sign(body)) {
+                
+            }else{
+                return res.end("Not Allowed!")   // 非法请求
+            }
+        })
+
         res.setHeader("Content-Type", "application/json")
         res.end(JSON.stringify({code: 0, msg: 'success'}))
     }else{
