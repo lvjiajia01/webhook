@@ -12,4 +12,4 @@ echo "停止旧容器并删除旧容器"
 docker stop back-container
 docker rm back-container
 echo "启动新容器"
-docker container run -p 3000:3000 --name back-container -d back
+docker container run -p 3000:3000 --name back-container -d back1.0
