@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "pmstart": "pm2 start ./server.js --name webhook --watch",
-    "pmstop": "pm2 stop webhook"
+    "start:pm": "pm2 start ./server.js --name webhook --watch",
+    "stop:pm": "pm2 stop webhook"
   },
   "keywords": [],
   "author": "",
