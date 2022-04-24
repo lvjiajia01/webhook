@@ -1,7 +1,7 @@
 const http = require("http")
 const crypto = require("crypto")
 const { spawn } = require("child_process")
-import sendMail from "./sendMail";
+const sendMail = require("./sendMail")
 const SECRET = '123456';
 
 function getSign(body) {
