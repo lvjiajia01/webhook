@@ -1,4 +1,3 @@
-const { sign } = require("crypto")
 const http = require("http")
 const { spawn } = require("process")
 const SECRET = '123456';
