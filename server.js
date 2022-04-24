@@ -1,6 +1,7 @@
 const http = require("http")
 const crypto = require("crypto")
 const { spawn } = require("child_process")
+import sendMail from "./sendMail";
 const SECRET = '123456';
 
 function getSign(body) {
@@ -37,6 +38,13 @@ const server = http.createServer((req, res) => {
                 child.stdout.on('end', buffer => {
                     let log = Buffer.concat(buffers);
                     console.log(log);
+                    sendMail(`
+                        <p>部署日期：${ new Date() }</p>
+                        <p>部署人：${ payload.pusher.name }</p>
+                        <p>部署邮箱：${ payload.pusher.email }</p>
+                        <p>提交信息：${ payload.head_commit && payload.head_commit['message'] }</p>
+                        <p>部署日志：${ log.replace("\r\n", '<br/>') }</p>
+                    `)
                 })
             }
         })
