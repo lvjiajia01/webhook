@@ -1,6 +1,6 @@
 const { sign } = require("crypto")
 const http = require("http")
-
+const { spawn } = require("process")
 const SECRET = '123456';
 
 function sign(body) {
@@ -21,10 +21,26 @@ const server = http.createServer((req, res) => {
             if(signature !== sign(body)) {
                 return res.end("Not Allowed!")   // 非法请求
             }
+
+            res.setHeader("Content-Type", "application/json")
+            res.end(JSON.stringify({code: 0, msg: 'success'}))
+    
+            // 开始部署
+            if(event === 'push') {
+                let payload = JSON.parse(body);
+                // 开启子进程
+                let child = spawn('sh', [`./${ payload.repository.name }.sh`]);
+                let buffers = [];
+                child.stdout.on('data', buffer => {
+                    buffers.push(buffer)
+                })
+                child.stdout.on('end', buffer => {
+                    let log = Buffer.concat(buffers);
+                    console.log(log);
+                })
+            }
         })
 
-        res.setHeader("Content-Type", "application/json")
-        res.end(JSON.stringify({code: 0, msg: 'success'}))
     }else{
         res.end("Not Found!")
     }
