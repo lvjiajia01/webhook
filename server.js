@@ -4,7 +4,7 @@ const { spawn } = require("process")
 const SECRET = '123456';
 
 function getSign(body) {
-    return `sha1=${ crypto.creteHmac('sha1', SECRET).update(body).digest('hex') }`
+    return `sha1=${ crypto.createHmac('sha1', SECRET).update(body).digest('hex') }`
 }
 
 const server = http.createServer((req, res) => {
