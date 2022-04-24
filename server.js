@@ -2,7 +2,7 @@ const http = require("http")
 const { spawn } = require("process")
 const SECRET = '123456';
 
-function sign(body) {
+function getSign(body) {
     return `sha1=${ crypto.creteHmac('sha1', SECRET).update(body).digest('hex') }`
 }
 
@@ -17,7 +17,7 @@ const server = http.createServer((req, res) => {
             let body = Buffer.concat(buffers)
             let event = req.header['x-github-event']        // push
             let signature = req.header['x-hub-signature']   // 签名
-            if(signature !== sign(body)) {
+            if(signature !== getSign(body)) {
                 return res.end("Not Allowed!")   // 非法请求
             }
 
