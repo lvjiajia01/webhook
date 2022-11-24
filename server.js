@@ -29,6 +29,7 @@ const server = http.createServer((req, res) => {
             // 开始部署
             if(event === 'push') {
                 let payload = JSON.parse(body);
+                console.log('------------------', payload.repository.name)
                 // 开启子进程
                 let child = spawn('sh', [`./${ payload.repository.name }.sh`]);
                 let buffers = [];
@@ -37,7 +38,7 @@ const server = http.createServer((req, res) => {
                 })
                 child.stdout.on('end', buffer => {
                     let log = Buffer.concat(buffers);
-                    console.log(log);
+                    console.log('===============', log);
                     sendMail(`
                         <p>部署日期：${ new Date() }</p>
                         <p>部署人：${ payload.pusher.name }</p>
