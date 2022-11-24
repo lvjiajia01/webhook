@@ -29,8 +29,13 @@ const server = http.createServer((req, res) => {
             console.log('开始部署', body)
 
             console.log('=================')
+            
+            console.log(111111111, body.toString())
+            console.log('=================')
+            
+            console.log(2222222, JSON.parse(body))
 
-            console.log(JSON.parse(body))
+            console.log(3333333)
     
             // 开始部署
             // if(event === 'push') {
