@@ -12,7 +12,7 @@ const transporter = nodemailer.createTransport({
 
 function sendMail(msg) {
     const mailOptions = {
-        from: '"18662535054" <18662535054@163.com',
+        from: '"18662535054" <18662535054@163.com>',
         to: '18662535054@163.com',
         to: 'lvjiajia@pwrd.com',
         subject: '部署通知',
