@@ -33,7 +33,6 @@ const server = http.createServer((req, res) => {
             // 开始部署
             if(event === 'push') {
                 let payload = JSON.parse(decodeURIComponent(bufferData));
-                console.log('payload=', payload)
                 // sendMail(`
                 //     <p>部署日期：${ new Date() }</p>
                 //     <p>部署人：${ payload.pusher.name }</p>
