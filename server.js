@@ -39,7 +39,6 @@ const server = http.createServer((req, res) => {
                     <p>部署人：${ payload.pusher.name }</p>
                     <p>部署邮箱：${ payload.pusher.email }</p>
                     <p>提交信息：${ payload.head_commit && payload.head_commit['message'] }</p>
-                    <p>部署日志：${ log.toString().replace("\r\n", '<br/>') }</p>
                 `)
                 
                 // // 开启子进程
