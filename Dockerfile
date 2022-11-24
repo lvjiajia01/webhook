@@ -1,5 +1,5 @@
 FROM node
-LABEL name="back"
+LABEL name="server"
 LABEL version="1.0"
 COPY . /app
 WORKDIR /app
