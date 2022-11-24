@@ -14,4 +14,4 @@ echo "停止旧容器并删除旧容器"
 docker stop web-container
 docker rm web-container
 echo "启动新容器"
-docker container run -p 9090:9090 --name web-container -d web:1.0
+docker container run -p 80:80 --name web-container -d web:1.0
