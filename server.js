@@ -36,10 +36,12 @@ const server = http.createServer((req, res) => {
             
             console.log(111111111, bufferData)
             console.log('=================')
+            console.log(22222222, decodeURIComponent(bufferData))
+            console.log('=================')
             
-            console.log(2222222, JSON.parse(bufferData))
+            console.log(3333333, JSON.parse(decodeURIComponent(bufferData)))
 
-            console.log(3333333)
+            console.log(444444444)
     
             // 开始部署
             // if(event === 'push') {
