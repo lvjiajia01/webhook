@@ -26,10 +26,6 @@ const server = http.createServer((req, res) => {
             res.setHeader("Content-Type", "application/json")
             res.end(JSON.stringify({code: 0, msg: 'success'}))
 
-            console.log('开始部署', body)
-
-            console.log('=================')
-
             let bufferData = body.toString()
 
             bufferData = bufferData.startsWith('payload=') ? bufferData.split('payload=')[1] : bufferData.split('payload=')[0]
@@ -37,24 +33,32 @@ const server = http.createServer((req, res) => {
             // 开始部署
             if(event === 'push') {
                 let payload = JSON.parse(decodeURIComponent(bufferData));
-                console.log('------------------', payload.repository.name)
-                // 开启子进程
-                let child = spawn('sh', [`./${ payload.repository.name }.sh`]);
-                let buffers = [];
-                child.stdout.on('data', buffer => {
-                    buffers.push(buffer)
-                })
-                child.stdout.on('end', buffer => {
-                    let log = Buffer.concat(buffers);
-                    console.log('===============', log);
-                    sendMail(`
-                        <p>部署日期：${ new Date() }</p>
-                        <p>部署人：${ payload.pusher.name }</p>
-                        <p>部署邮箱：${ payload.pusher.email }</p>
-                        <p>提交信息：${ payload.head_commit && payload.head_commit['message'] }</p>
-                        <p>部署日志：${ log.toString().replace("\r\n", '<br/>') }</p>
-                    `)
-                })
+
+                sendMail(`
+                    <p>部署日期：${ new Date() }</p>
+                    <p>部署人：${ payload.pusher.name }</p>
+                    <p>部署邮箱：${ payload.pusher.email }</p>
+                    <p>提交信息：${ payload.head_commit && payload.head_commit['message'] }</p>
+                    <p>部署日志：${ log.toString().replace("\r\n", '<br/>') }</p>
+                `)
+                
+                // // 开启子进程
+                // let child = spawn('sh', [`./${ payload.repository.name }.sh`]);
+                // let buffers = [];
+                // child.stdout.on('data', buffer => {
+                //     buffers.push(buffer)
+                // })
+                // child.stdout.on('end', buffer => {
+                //     let log = Buffer.concat(buffers);
+                //     console.log('===============', log);
+                //     sendMail(`
+                //         <p>部署日期：${ new Date() }</p>
+                //         <p>部署人：${ payload.pusher.name }</p>
+                //         <p>部署邮箱：${ payload.pusher.email }</p>
+                //         <p>提交信息：${ payload.head_commit && payload.head_commit['message'] }</p>
+                //         <p>部署日志：${ log.toString().replace("\r\n", '<br/>') }</p>
+                //     `)
+                // })
             }
         })
 
