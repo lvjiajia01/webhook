@@ -29,11 +29,15 @@ const server = http.createServer((req, res) => {
             console.log('开始部署', body)
 
             console.log('=================')
+
+            let bufferData = body.toString()
+
+            bufferData = bufferData.startsWith('payload=') ? bufferData.split('payload=')[1] : bufferData.split('payload=')[0]
             
-            console.log(111111111, body.toString())
+            console.log(111111111, bufferData)
             console.log('=================')
             
-            console.log(2222222, JSON.parse(body))
+            console.log(2222222, JSON.parse(bufferData))
 
             console.log(3333333)
     
