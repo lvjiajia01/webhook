@@ -9,7 +9,6 @@ function getSign(body) {
 }
 
 const server = http.createServer((req, res) => {
-    console.log(req.method, req.url)
     let buffers = []
     if(req.method === 'POST' && req.url === '/webhook') {
         req.on('data', buffer => {
@@ -33,13 +32,6 @@ const server = http.createServer((req, res) => {
             // 开始部署
             if(event === 'push') {
                 let payload = JSON.parse(decodeURIComponent(bufferData));
-                // sendMail(`
-                //     <p>部署日期：${ new Date() }</p>
-                //     <p>部署人：${ payload.pusher.name }</p>
-                //     <p>部署邮箱：${ payload.pusher.email }</p>
-                //     <p>提交信息：${ payload.head_commit && payload.head_commit['message'] }</p>
-                //     <p>本次修改内容：${ payload.head_commit && payload.head_commit['url'] }</p>
-                // `)
                 
                 // // 开启子进程
                 let child = spawn('sh', [`./${ payload.repository.name }.sh`]);
